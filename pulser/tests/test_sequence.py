@@ -262,3 +262,19 @@ def test_sequence():
     assert json.loads(s)["__version__"] == pulser.__version__
     seq_ = Sequence.deserialize(s)
     assert str(seq) == str(seq_)
+
+
+def test_get_duration():
+    l1 = 4
+    square = np.array([[i, j] for i in range(l1) for j in range(l1)], dtype=float)
+    square -= np.mean(square, axis=0)
+    square *= 5
+    qubits = dict(enumerate(square))
+    reg = Register(qubits)
+    seq = Sequence(reg, Chadoq2)
+    seq.declare_channel('ch0', 'raman_local')
+    seq.target(1, 'ch0')
+
+    simple_pulse = Pulse.ConstantPulse(200, 2, -10, 0)
+    seq.add(simple_pulse, 'ch0')
+    assert seq.get_duration() == 200
