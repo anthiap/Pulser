@@ -266,7 +266,8 @@ def test_sequence():
 
 def test_get_duration():
     l1 = 4
-    square = np.array([[i, j] for i in range(l1) for j in range(l1)], dtype=float)
+    square = np.array([[i, j] for i in range(l1) 
+        for j in range(l1)], dtype=float)
     square -= np.mean(square, axis=0)
     square *= 5
     qubits = dict(enumerate(square))
