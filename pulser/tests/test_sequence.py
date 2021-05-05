@@ -267,11 +267,8 @@ def test_sequence():
 def test_get_duration():
     l1 = 4
     square = np.array([[i, j] for i in range(l1)
-                       for j in range(l1)], dtype=float)
-    square -= np.mean(square, axis=0)
-    square *= 5
-    qubits = dict(enumerate(square))
-    reg = Register(qubits)
+                       for j in range(l1)], dtype=float) * 5
+    reg = Register.from_coordinates(square)
     seq = Sequence(reg, Chadoq2)
     seq.declare_channel('ch0', 'raman_local')
     seq.target(1, 'ch0')
